@@ -1,6 +1,5 @@
 import argparse
 import numpy as np
-from memory import MemoryBank
 from agent import Agent
 
 
@@ -10,7 +9,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     agent = Agent(model_name=args.model)
-    memory_bank = MemoryBank()
+    memory_bank = agent.memory_bank
 
     """testing chat"""
     print(agent.chat(prompt="What is the capital of France?"))

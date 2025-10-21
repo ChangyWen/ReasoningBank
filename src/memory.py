@@ -13,6 +13,7 @@ class MemoryBank:
         self._meta: Dict[int, Tuple[str, str]] = {}
         self._next_id: int = 0
 
+
     def format_embedding(self, embedding: np.array) -> np.array:
         if isinstance(embedding, list):
             embedding = np.array(embedding)
@@ -22,6 +23,7 @@ class MemoryBank:
             assert embedding.shape[1] == self.embedding_dim
         return np.ascontiguousarray(embedding)
 
+
     def add_memory(self, title: str, content: str, embedding: np.array):
         embedding = self.format_embedding(embedding)
         mem_id = self._next_id
@@ -29,6 +31,7 @@ class MemoryBank:
         self._index.add_with_ids(embedding, np.array([mem_id], dtype=np.int64))
         self._meta[mem_id] = (title, content)
         self._next_id += 1
+
 
     def get_memory(self, query_embedding: np.array, top_k: int = 10) -> List[Tuple[str, str]]:
         if self._index.ntotal == 0 or top_k <= 0:

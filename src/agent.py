@@ -40,6 +40,7 @@ class Agent:
             HttpRequest("CredentialWrapper", "https://fakeurl"), PipelineContext(None)
         )
 
+
     def get_bearer_token_provider(
         credential: TokenCredential, *scopes: str
     ) -> Callable[[], str]:
@@ -52,6 +53,7 @@ class Agent:
 
         return wrapper
 
+
     token_provider = get_bearer_token_provider(
         DefaultAzureCredential(
             managed_identity_client_id="e6162a0d-e540-4454-995f-30bcb97f35b4"
@@ -59,12 +61,14 @@ class Agent:
         "https://cognitiveservices.azure.com/.default",
     )
 
+
     def load_azure_client(self):
         return AzureOpenAI(
             api_version="2025-01-01-preview",
             azure_endpoint="https://csnf-singularity-aoai-eastus2.openai.azure.com/",
             azure_ad_token_provider=self.token_provider,
         )
+
 
     def load_vllm_client(self):
         return OpenAI(base_url="http://localhost:8000/v1", api_key="empty")
@@ -77,6 +81,7 @@ class Agent:
         response = self.embedder.embeddings.create(input=texts, model="csnf-text-embedding-3-large")
         return [item.embedding for item in response.data]
 
+
     """
     Main functions: Chat
     """
@@ -87,4 +92,3 @@ class Agent:
             max_completion_tokens=2048,
         )
         return response.choices[0].message.content
-
