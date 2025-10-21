@@ -14,7 +14,7 @@ class MemoryBank:
         self._next_id: int = 0
 
 
-    def format_embedding(self, embedding: np.array) -> np.array:
+    def _format_embedding(self, embedding: np.array) -> np.array:
         if isinstance(embedding, list):
             embedding = np.array(embedding)
         embedding = embedding.astype(np.float32)
@@ -25,7 +25,7 @@ class MemoryBank:
 
 
     def add_memory(self, title: str, content: str, embedding: np.array):
-        embedding = self.format_embedding(embedding)
+        embedding = self._format_embedding(embedding)
         mem_id = self._next_id
 
         self._index.add_with_ids(embedding, np.array([mem_id], dtype=np.int64))
@@ -36,7 +36,7 @@ class MemoryBank:
     def get_memory(self, query_embedding: np.array, top_k: int = 10) -> List[Tuple[str, str]]:
         if self._index.ntotal == 0 or top_k <= 0:
             return []
-        query_embedding = self.format_embedding(query_embedding)
+        query_embedding = self._format_embedding(query_embedding)
         _, ids = self._index.search(query_embedding, min(top_k, self._index.ntotal))
         valid_ids = [int(i) for i in ids[0] if i != -1]
         return [self._meta[i] for i in valid_ids]

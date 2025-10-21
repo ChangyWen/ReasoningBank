@@ -20,7 +20,7 @@ from memory import MemoryBank
 
 
 class Agent:
-    def __init__(self, model_name: str):
+    def __init__(self, model_name: str, top_k: int = 10):
         self.model_name = model_name
 
         azure_client = self.load_azure_client()
@@ -33,6 +33,7 @@ class Agent:
         self.embedder = azure_client
 
         self.memory_bank = MemoryBank()
+        self.top_k = top_k
 
 
     def _make_request(self) -> PipelineRequest[HttpRequest]:
@@ -72,6 +73,14 @@ class Agent:
 
     def load_vllm_client(self):
         return OpenAI(base_url="http://localhost:8000/v1", api_key="empty")
+
+
+    def add_memory(self, title: str, content: str, embedding: np.array):
+        self.memory_bank.add_memory(title=title, content=content, embedding=embedding)
+
+
+    def get_memory(self, query_embedding: np.array) -> List[Tuple[str, str]]:
+        return self.memory_bank.get_memory(query_embedding=query_embedding, top_k=self.top_k)
 
 
     """
