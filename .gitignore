@@ -1,0 +1,9 @@
+datasets
+temp*
+__pycache__
+.env
+archive
+.DS_Store
+logs
+results
+figures

@@ -1,0 +1,13 @@
+temp
+.env
+logs
+data/gsm8k/train.parquet
+data/gsm8k/test.parquet
+data/math/train.parquet
+data/math/test.parquet
+data/math/amc.parquet
+data/math/math-500.parquet
+data/math/minerva.parquet
+data/math/olympiad_bench.parquet
+figures
+results
