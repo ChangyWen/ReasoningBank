@@ -22,13 +22,13 @@ if __name__ == "__main__":
     agent = Agent(model_name=args.model, top_k=args.top_k)
 
     files = [
-        "data/omni_math_rule/omni_math_rule.parquet",
         "data/math/aime.parquet", # 30
         "data/math/amc.parquet", # 83
         "data/math/minerva.parquet", # 272
         "data/math/olympiad_bench.parquet", # 675
         "data/math/math-500.parquet", # 500
         "data/gsm8k/test.parquet", # 1319
+        "data/omni_math_rule/omni_math_rule.parquet",
     ]
 
     for file in files:
